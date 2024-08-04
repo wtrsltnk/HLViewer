@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="ResourceFiles" displayName="Common" projectFiles="true">
+      <itemPath>Common/common.cpp</itemPath>
+      <itemPath>Common/common.h</itemPath>
+      <itemPath>Common/string.cpp</itemPath>
+      <itemPath>Common/string.h</itemPath>
+      <itemPath>Common/stringlist.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f1" displayName="Filesupport" projectFiles="true">
+      <itemPath>basefile.cpp</itemPath>
+      <itemPath>basefile.h</itemPath>
+      <itemPath>bspfile.cpp</itemPath>
+      <itemPath>bspfile.h</itemPath>
+      <itemPath>mdlfile.cpp</itemPath>
+      <itemPath>mdlfile.h</itemPath>
+      <itemPath>miptexbasedfile.cpp</itemPath>
+      <itemPath>miptexbasedfile.h</itemPath>
+      <itemPath>wadfile.cpp</itemPath>
+      <itemPath>wadfile.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles"
+                   displayName="Header Files"
+                   projectFiles="true">
+      <itemPath>containerfile.h</itemPath>
+      <itemPath>containerview.h</itemPath>
+      <itemPath>error.h</itemPath>
+      <itemPath>main.h</itemPath>
+      <itemPath>resource.h</itemPath>
+      <itemPath>texturecontainer.h</itemPath>
+      <itemPath>texturedialog.h</itemPath>
+      <itemPath>textureview.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="SourceFiles"
+                   displayName="Source Files"
+                   projectFiles="true">
+      <itemPath>containerview.cpp</itemPath>
+      <itemPath>error.cpp</itemPath>
+      <itemPath>main.cpp</itemPath>
+      <itemPath>program.cpp</itemPath>
+      <itemPath>texturedialog.cpp</itemPath>
+      <itemPath>textureview.cpp</itemPath>
+    </logicalFolder>
+    <logicalFolder name="f3" displayName="UI" projectFiles="true">
+      <itemPath>button.cpp</itemPath>
+      <itemPath>button.h</itemPath>
+      <itemPath>control.cpp</itemPath>
+      <itemPath>control.h</itemPath>
+      <itemPath>dialog.cpp</itemPath>
+      <itemPath>dialog.h</itemPath>
+      <itemPath>glcontrol.cpp</itemPath>
+      <itemPath>glcontrol.h</itemPath>
+      <itemPath>label.cpp</itemPath>
+      <itemPath>label.h</itemPath>
+      <itemPath>listview.cpp</itemPath>
+      <itemPath>listview.h</itemPath>
+      <itemPath>listviewitem.cpp</itemPath>
+      <itemPath>treeview.cpp</itemPath>
+      <itemPath>treeview.h</itemPath>
+      <itemPath>treeviewitem.cpp</itemPath>
+      <itemPath>window.cpp</itemPath>
+      <itemPath>window.h</itemPath>
+      <itemPath>wnd.cpp</itemPath>
+      <itemPath>wnd.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <platform>3</platform>
+      </toolsSet>
+      <compileType>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hlviewer.exe</output>
+          <linkerLibItems>
+            <linkerLibLibItem>comctl32</linkerLibLibItem>
+            <linkerLibLibItem>comdlg32</linkerLibLibItem>
+            <linkerLibLibItem>glu32</linkerLibLibItem>
+            <linkerLibLibItem>gdi32</linkerLibLibItem>
+            <linkerLibLibItem>opengl32</linkerLibLibItem>
+          </linkerLibItems>
+          <commandLine>-mwindows</commandLine>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <platform>3</platform>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/hlviewer.exe</output>
+          <linkerLibItems>
+            <linkerLibLibItem>comdlg32</linkerLibLibItem>
+            <linkerLibLibItem>comctl32</linkerLibLibItem>
+            <linkerLibLibItem>glu32</linkerLibLibItem>
+            <linkerLibLibItem>gdi32</linkerLibLibItem>
+            <linkerLibLibItem>opengl32</linkerLibLibItem>
+          </linkerLibItems>
+          <commandLine>-mwindows</commandLine>
+        </linkerTool>
+      </compileType>
+    </conf>
+  </confs>
+</configurationDescriptor>
