@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   basefile.h
  * Author: Administrator
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef _BASEFILE_H
-#define	_BASEFILE_H
+#define _BASEFILE_H
 
 #include "Common/string.h"
 #include <stdio.h>
@@ -19,18 +19,16 @@ public:
 
     bool openFile(String);
     void closeFile();
-    
-protected:
-    virtual bool postOpenFile() { }
-    virtual void preCloseFile() { }
 
-    bool readData(char* data, int size, int offset = -1);
+protected:
+    virtual bool postOpenFile() { return false; }
+    virtual void preCloseFile() {}
+
+    bool readData(char *data, int size, int offset = -1);
 
 protected:
     String m_filename;
-    FILE* m_file;
-    
+    FILE *m_file = nullptr;
 };
 
-#endif	/* _BASEFILE_H */
-
+#endif /* _BASEFILE_H */

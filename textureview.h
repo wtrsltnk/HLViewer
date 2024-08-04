@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   textureview.h
  * Author: Administrator
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef _TEXTUREVIEW_H
-#define	_TEXTUREVIEW_H
+#define _TEXTUREVIEW_H
 
 #include "glcontrol.h"
 
@@ -31,5 +31,4 @@ private:
     float m_zoomFactor;
 };
 
-#endif	/* _TEXTUREVIEW_H */
-
+#endif /* _TEXTUREVIEW_H */

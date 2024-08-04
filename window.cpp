@@ -125,14 +125,14 @@ LRESULT Window::staticProc(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam)
         {
             window->m_hWnd = hWnd;
 
-            ::SetWindowLong(hWnd, GWL_USERDATA, reinterpret_cast <long> (window));
+            ::SetWindowLongPtr(hWnd, GWLP_USERDATA, reinterpret_cast <long long> (window));
 
             return window->objectProc(msg, wParam, lParam);
         }
     }
     else
     {
-        window = reinterpret_cast <Window*>(::GetWindowLong(hWnd, GWL_USERDATA));
+        window = reinterpret_cast <Window*>(::GetWindowLongPtr(hWnd, GWLP_USERDATA));
 
         if (window != NULL)
         {

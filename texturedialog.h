@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   texturedialog.h
  * Author: Administrator
  *
@@ -6,11 +6,11 @@
  */
 
 #ifndef _TEXTUREDIALOG_H
-#define	_TEXTUREDIALOG_H
+#define _TEXTUREDIALOG_H
 
+#include "button.h"
 #include "dialog.h"
 #include "texturecontainer.h"
-#include "button.h"
 #include "textureview.h"
 
 #define ID_NEXTTEXTURE_BUTTON 1
@@ -22,7 +22,7 @@ public:
     TextureDialog();
     virtual ~TextureDialog();
 
-    void setTextureContainer(TextureContainer* container);
+    void setTextureContainer(TextureContainer *container);
     void setCurrentTexture(int current);
 
 protected:
@@ -30,7 +30,7 @@ protected:
     virtual void onInitializeDialog();
 
 private:
-    TextureContainer* m_container;
+    TextureContainer *m_container;
     int m_currentTexture;
 
     ui::Button m_nextTexture;
@@ -40,5 +40,4 @@ private:
     void stepTexture(int step);
 };
 
-#endif	/* _TEXTUREDIALOG_H */
-
+#endif /* _TEXTUREDIALOG_H */

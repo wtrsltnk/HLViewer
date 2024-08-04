@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   TreeView.h
  * Author: Wouter
  *
@@ -6,72 +6,70 @@
  */
 
 #ifndef _TREEVIEW_IMP_H
-#define	_TREEVIEW_IMP_H
+#define _TREEVIEW_IMP_H
 
+#include "Common/string.h"
 #include "control.h"
 #include <commctrl.h>
-#include "Common/string.h"
 
 namespace ui
 {
     class TreeViewItem;
-    
+
     class TreeView : public Control
     {
     public:
-	TreeView();
-	TreeView(DWORD id);
-	virtual ~TreeView();
+        TreeView();
+        TreeView(DWORD id);
+        virtual ~TreeView();
 
-	TreeViewItem getFirstItem() const;
-	TreeViewItem addItem(String text, int image, int selimage, DWORD data, int state = 0);
-	
-	TreeViewItem getSelectedItem() const;
+        TreeViewItem getFirstItem() const;
+        TreeViewItem addItem(String text, int image, int selimage, DWORD data, int state = 0);
 
-	void clearItems();
+        TreeViewItem getSelectedItem() const;
 
-	HIMAGELIST setNormalImageList(HIMAGELIST himl);
+        void clearItems();
 
-	TreeViewItem hitTestCursor();
+        HIMAGELIST setNormalImageList(HIMAGELIST himl);
+
+        TreeViewItem hitTestCursor();
     };
 
     class TreeViewItem
     {
     public:
-	TreeViewItem(const TreeView* parent, HTREEITEM item);
-	TreeViewItem(const TreeViewItem& item);
-	virtual ~TreeViewItem();
+        TreeViewItem(const TreeView *parent, HTREEITEM item);
+        TreeViewItem(const TreeViewItem &item);
+        virtual ~TreeViewItem();
 
-	String getText() const;
-	void setText(String text);
+        String getText() const;
+        void setText(String text);
 
-	void* getData() const;
-	void setData(void* data);
+        void *getData() const;
+        void setData(void *data);
 
-	bool getCheckState() const;
-	void setCheckState(bool state);
+        bool getCheckState() const;
+        void setCheckState(bool state);
 
-	TreeViewItem addItem(String text, int image, int selimage, DWORD data, int state = 0);
+        TreeViewItem addItem(String text, int image, int selimage, DWORD data, int state = 0);
         void removeMe();
 
-	TreeViewItem getParent() const;
-	TreeViewItem getFirstChild() const;
-	TreeViewItem getNextSibling() const;
+        TreeViewItem getParent() const;
+        TreeViewItem getFirstChild() const;
+        TreeViewItem getNextSibling() const;
 
-	void clearChilds();
-	bool hasChilds();
+        void clearChilds();
+        bool hasChilds();
 
-	void expand();
-	void collapse();
+        void expand();
+        void collapse();
 
-	bool isValid();
+        bool isValid();
 
     private:
-	const TreeView* m_parent;
-	HTREEITEM m_item;
-
+        const TreeView *m_parent = nullptr;
+        HTREEITEM m_item = nullptr;
     };
-}
+} // namespace ui
 
-#endif	/* _TREEVIEW_IMP_H */
-
+#endif /* _TREEVIEW_IMP_H */

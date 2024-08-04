@@ -25,7 +25,7 @@ public:
     void selectTexture(int index);
 
 protected:
-    TextureContainer* m_textureContainer;
+    TextureContainer* m_textureContainer = nullptr;
     int m_selectedTexture;
     SCROLLINFO m_scrollInformation;
 

@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   button.h
  * Author: Administrator
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef _BUTTON_IMP_H
-#define	_BUTTON_IMP_H
+#define _BUTTON_IMP_H
 
 #include "control.h"
 
@@ -15,14 +15,12 @@ namespace ui
     class Button : public Control
     {
     public:
-	Button();
-	Button(DWORD id);
-	virtual ~Button();
+        Button();
+        Button(DWORD id);
+        virtual ~Button();
 
     private:
-
     };
-}
+} // namespace ui
 
-#endif	/* _BUTTON_IMP_H */
-
+#endif /* _BUTTON_IMP_H */

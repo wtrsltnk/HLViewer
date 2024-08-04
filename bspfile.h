@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   bspfile.h
  * Author: Wouter
  *
@@ -6,10 +6,9 @@
  */
 
 #ifndef _BSPFILE_H
-#define	_BSPFILE_H
+#define _BSPFILE_H
 
 #include "Common/string.h"
-#include <stdio.h>
 #include "containerfile.h"
 #include "miptexbasedfile.h"
 
@@ -40,13 +39,13 @@ public:
     virtual bool postOpenFile();
     virtual void preCloseFile();
 
-    virtual Container* getContainer(int type);
+    virtual Container *getContainer(int type);
 
     virtual String getFileName() const;
     virtual int getTextureCount() const;
     virtual String getTextureName(int index) const;
     virtual GLuint getTextureID(int index) const;
-    virtual void getTextureSize(int index, int& width, int& height) const;
+    virtual void getTextureSize(int index, int &width, int &height) const;
     virtual GLuint setupTextureToGl(int index);
     virtual void setupTextures();
     virtual void cleanupTextureFromGl(GLuint id);
@@ -54,12 +53,10 @@ public:
 
 private:
     tBSPHeader m_header;
-    unsigned char* m_data;
+    unsigned char *m_data;
     int m_miptexCount;
-    int* m_miptexIndex;
-    GLuint* m_textureIndex;
-
+    int *m_miptexIndex;
+    GLuint *m_textureIndex;
 };
 
-#endif	/* _BSPFILE_H */
-
+#endif /* _BSPFILE_H */

@@ -1,15 +1,15 @@
 #include "main.h"
+#include "dialog.h"
 #include "error.h"
 #include "main.h"
 #include "mdlfile.h"
-#include "dialog.h"
-#include <stdio.h>
 #include <commdlg.h>
+#include <stdio.h>
 
 using namespace std;
 
-Main::Main(int argc, char* argv[])
-        : Window("MainWindow"), m_currentContainer(0)
+Main::Main(int argc, char *argv[])
+    : Window("MainWindow"), m_currentContainer(0)
 {
     this->m_strWindowTitle = "HLViewer";
     this->m_exStyle = WS_EX_WINDOWEDGE;
@@ -22,7 +22,7 @@ Main::~Main()
 {
 }
 
-void Main::parseArgs(int argc, char* argv[])
+void Main::parseArgs(int argc, char *argv[])
 {
     if (argc >= 1)
     {
@@ -38,7 +38,7 @@ LRESULT Main::objectProc(UINT uMsg, WPARAM wParam, LPARAM lParam)
         {
             this->m_tv.createControl(this);
             this->m_gl.createGLControl(this);
-	    
+
             SendMessage(this->m_hWnd, WM_SETFOCUS, 0, 0);
             if (this->m_fileFromArguments != "")
             {
@@ -50,8 +50,8 @@ LRESULT Main::objectProc(UINT uMsg, WPARAM wParam, LPARAM lParam)
         {
             m_tv.resize(196, HIWORD(lParam));
             m_gl.move(200, 0);
-            m_gl.resize(LOWORD(lParam)-200, HIWORD(lParam));
-	    m_gl.repaint();
+            m_gl.resize(LOWORD(lParam) - 200, HIWORD(lParam));
+            m_gl.repaint();
             break;
         }
         case WM_PARENTNOTIFY:
@@ -65,7 +65,7 @@ LRESULT Main::objectProc(UINT uMsg, WPARAM wParam, LPARAM lParam)
         }
         case WM_NOTIFY:
         {
-            NMTREEVIEW* pnmtv = (LPNMTREEVIEW) lParam;
+            NMTREEVIEW *pnmtv = (LPNMTREEVIEW)lParam;
             switch (pnmtv->hdr.code)
             {
                 case TVN_SELCHANGED:
@@ -93,10 +93,10 @@ LRESULT Main::objectProc(UINT uMsg, WPARAM wParam, LPARAM lParam)
                         ui::TreeViewItem container = item;
                         if (!item.hasChilds())
                             container = item.getParent();
-                        
+
                         if (container.isValid())
                         {
-                            TextureContainer* c = (TextureContainer*)container.getData();
+                            TextureContainer *c = (TextureContainer *)container.getData();
                             c->cleanupTextures();
                             container.removeMe();
                             delete c;
@@ -129,23 +129,23 @@ LRESULT Main::objectProc(UINT uMsg, WPARAM wParam, LPARAM lParam)
 
 void Main::openFileDialog()
 {
-    OPENFILENAME ofn = { 0 };
-    char szFile[MAX_PATH+1] =	{ 0 };
-    static char *szFilter   =	SUPPORTED_FILES_FILTER;
+    OPENFILENAME ofn = {0};
+    char szFile[MAX_PATH + 1] = {0};
+    static char *szFilter = SUPPORTED_FILES_FILTER;
 
-    //specificeer de dialog box zo volledig mogelijk
-    ofn.Flags             = OFN_HIDEREADONLY;
-    ofn.hwndOwner         = this->m_hWnd;
+    // specificeer de dialog box zo volledig mogelijk
+    ofn.Flags = OFN_HIDEREADONLY;
+    ofn.hwndOwner = this->m_hWnd;
     ofn.lpstrCustomFilter = 0;
-    ofn.lpstrFile         = szFile;
-    ofn.lpstrFileTitle    = 0;
-    ofn.lpstrFilter       = szFilter;
-    ofn.lpstrInitialDir   = 0;
-    ofn.lpstrTitle        = "HLViewer - Open...";
-    ofn.lStructSize       = sizeof( OPENFILENAME );
-    ofn.nMaxFile          = MAX_PATH;
+    ofn.lpstrFile = szFile;
+    ofn.lpstrFileTitle = 0;
+    ofn.lpstrFilter = szFilter;
+    ofn.lpstrInitialDir = 0;
+    ofn.lpstrTitle = "HLViewer - Open...";
+    ofn.lStructSize = sizeof(OPENFILENAME);
+    ofn.nMaxFile = MAX_PATH;
 
-    if(GetOpenFileName(&ofn) != 0)
+    if (GetOpenFileName(&ofn) != 0)
     {
         this->readFile(ofn.lpstrFile);
     }
@@ -158,7 +158,7 @@ void Main::readFile(String filename)
 
     if (ext == ".wad")
     {
-        WadFile* wadfile = new WadFile();
+        WadFile *wadfile = new WadFile();
 
         wadfile->cleanupTextures();
         wadfile->closeFile();
@@ -177,7 +177,7 @@ void Main::readFile(String filename)
     }
     else if (ext == ".bsp")
     {
-        BspFile* bspfile = new BspFile();
+        BspFile *bspfile = new BspFile();
 
         bspfile->cleanupTextures();
         bspfile->closeFile();
@@ -196,7 +196,7 @@ void Main::readFile(String filename)
     }
     else if (ext == ".mdl")
     {
-        MdlFile* mdlfile = new MdlFile();
+        MdlFile *mdlfile = new MdlFile();
 
         mdlfile->cleanupTextures();
         mdlfile->closeFile();
@@ -224,7 +224,7 @@ void Main::closeAllFiles()
 {
 }
 
-void Main::fillTreeView(TextureContainer* tc)
+void Main::fillTreeView(TextureContainer *tc)
 {
     ui::TreeViewItem root = this->m_tv.addItem(Common::fileName(tc->getFileName()), 0, 0, (DWORD)tc, TVIS_EXPANDED);
     ui::TreeViewItem textures = root.addItem("textures", 0, 0, (DWORD)tc, TVIS_EXPANDED);
@@ -245,8 +245,12 @@ void Main::setTexture()
     {
         if (selected.hasChilds())
         {
-            this->setContainer((TextureContainer*)selected.getData());
-            this->enableMenuItem(MAIN_MENU_TEXTURE, false);
+            TextureContainer* tc = static_cast <TextureContainer *>(selected.getData());
+            if (tc != nullptr)
+            {
+                this->setContainer(tc);
+                this->enableMenuItem(MAIN_MENU_TEXTURE, false);
+            }
         }
         else
         {
@@ -254,26 +258,26 @@ void Main::setTexture()
             this->m_gl.selectTexture(index);
             this->enableMenuItem(MAIN_MENU_TEXTURE, true);
 
-            this->setContainer((TextureContainer*)selected.getParent().getData());
+            this->setContainer((TextureContainer *)selected.getParent().getData());
         }
     }
     else
     {
-        this->setContainer((TextureContainer*)selected.getData());
-            this->enableMenuItem(MAIN_MENU_TEXTURE, false);
+        this->setContainer((TextureContainer *)selected.getData());
+        this->enableMenuItem(MAIN_MENU_TEXTURE, false);
     }
     this->m_gl.setTextureContainer(this->m_currentContainer);
 }
 
-void Main::setContainer(TextureContainer* tc)
+void Main::setContainer(TextureContainer *tc)
 {
     this->m_currentContainer = tc;
     this->m_gl.setTextureContainer(tc);
     this->enableMenuItem(MAIN_MENU_TEXTURE, false);
     if (tc != 0)
     {
-        String windowTitle = (String)"HLViewer - " + this->m_currentContainer->getFileName();
-        SetWindowText(this->m_hWnd, (const char*)windowTitle);
+        String windowTitle = (String) "HLViewer - " + this->m_currentContainer->getFileName();
+        SetWindowText(this->m_hWnd, (const char *)windowTitle);
     }
     else
     {

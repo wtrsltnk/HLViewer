@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   dialog.h
  * Author: Wouter
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef _DIALOG_IMP_H
-#define	_DIALOG_IMP_H
+#define _DIALOG_IMP_H
 
 #include "window.h"
 
@@ -15,20 +15,18 @@ namespace ui
     class Dialog : protected Window
     {
     public:
-	Dialog(LPTSTR windowClass);
-	virtual ~Dialog();
+        Dialog(LPTSTR windowClass);
+        virtual ~Dialog();
 
-	bool showModal(Window* parent);
+        bool showModal(Window *parent);
 
     protected:
-	virtual LRESULT objectProc(UINT msg, WPARAM wParam, LPARAM lParam);
-	virtual void onInitializeDialog() = 0;
+        virtual LRESULT objectProc(UINT msg, WPARAM wParam, LPARAM lParam);
+        virtual void onInitializeDialog() = 0;
 
     private:
-	bool m_done;
-
+        bool m_done = false;
     };
-}
+} // namespace ui
 
-#endif	/* _DIALOG_IMP_H */
-
+#endif /* _DIALOG_IMP_H */

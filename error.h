@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   error.h
  * Author: Wouter
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef _ERROR_H
-#define	_ERROR_H
+#define _ERROR_H
 
 #include "Common/string.h"
 
@@ -23,9 +23,8 @@ protected:
     void addError(String error);
 
 private:
-    bool m_hasError;
+    bool m_hasError = false;
     char m_lastError[256];
 };
 
-#endif	/* _ERROR_H */
-
+#endif /* _ERROR_H */

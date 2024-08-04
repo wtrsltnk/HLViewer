@@ -1,14 +1,14 @@
-/* 
+/*
  * File:   bspfile.cpp
  * Author: Wouter
- * 
+ *
  * Created on January 25, 2009, 10:36 PM
  */
 
 #include "bspfile.h"
 
 BspFile::BspFile()
-        : m_data(0), m_miptexCount(0), m_miptexIndex(0), m_textureIndex(0)
+    : m_data(0), m_miptexCount(0), m_miptexIndex(0), m_textureIndex(0)
 {
 }
 
@@ -34,7 +34,7 @@ bool BspFile::postOpenFile()
             fread(this->m_data, 1, this->m_header.lumps[HL1_BSP_TEXTURELUMP].size, this->m_file);
 
             int tmpCount = (int)*this->m_data;
-            int* tmpIndex = 0;
+            int *tmpIndex = 0;
 
             if (tmpCount > 0)
             {
@@ -46,7 +46,7 @@ bool BspFile::postOpenFile()
                 // Count all the Miptexes contianed in the BSP file (the ones with offset larger then 0)
                 for (int i = 0; i < tmpCount; i++)
                 {
-                    tBSPMipTexHeader* miptex = (tBSPMipTexHeader*)(this->m_data + tmpIndex[i]);
+                    tBSPMipTexHeader *miptex = (tBSPMipTexHeader *)(this->m_data + tmpIndex[i]);
                     if (miptex->offsets[0] != 0)
                         this->m_miptexCount++;
                 }
@@ -59,7 +59,7 @@ bool BspFile::postOpenFile()
                     // Copy all the containing BSP offsets
                     for (int i = 0, j = 0; i < tmpCount; i++)
                     {
-                        tBSPMipTexHeader* miptex = (tBSPMipTexHeader*)(this->m_data + tmpIndex[i]);
+                        tBSPMipTexHeader *miptex = (tBSPMipTexHeader *)(this->m_data + tmpIndex[i]);
                         if (miptex->offsets[0] != 0)
                             this->m_miptexIndex[j++] = tmpIndex[i];
                     }
@@ -71,7 +71,7 @@ bool BspFile::postOpenFile()
                     this->m_file = 0;
                     this->addError("There are no textures in this BSP file");
                 }
-                delete []tmpIndex;
+                delete[] tmpIndex;
             }
             else
             {
@@ -93,24 +93,24 @@ bool BspFile::postOpenFile()
 void BspFile::preCloseFile()
 {
     if (this->m_data != 0)
-        delete []this->m_data;
+        delete[] this->m_data;
     this->m_data = 0;
 
     if (this->m_miptexIndex != 0)
-        delete []this->m_miptexIndex;
+        delete[] this->m_miptexIndex;
     this->m_miptexIndex = 0;
 
     if (this->m_textureIndex != 0)
-        delete []this->m_textureIndex;
+        delete[] this->m_textureIndex;
     this->m_textureIndex = 0;
 }
 
-Container* BspFile::getContainer(int type)
+Container *BspFile::getContainer(int type)
 {
     switch (type)
     {
         case eTextureContainer:
-            return (Container*)this;
+            return (Container *)this;
     }
     return 0;
 }
@@ -135,7 +135,7 @@ String BspFile::getTextureName(int index) const
     {
         if (index >= 0 && index < this->m_miptexCount)
         {
-            tBSPMipTexHeader* miptex = (tBSPMipTexHeader*)(this->m_data + this->m_miptexIndex[index]);
+            tBSPMipTexHeader *miptex = (tBSPMipTexHeader *)(this->m_data + this->m_miptexIndex[index]);
             return miptex->name;
         }
     }
@@ -154,13 +154,13 @@ GLuint BspFile::getTextureID(int index) const
     return 0;
 }
 
-void BspFile::getTextureSize(int index, int& width, int& height) const
+void BspFile::getTextureSize(int index, int &width, int &height) const
 {
     if (this->m_file != 0)
     {
         if (index >= 0 && index < this->m_miptexCount)
         {
-            tBSPMipTexHeader* miptex = (tBSPMipTexHeader*)(this->m_data + this->m_miptexIndex[index]);
+            tBSPMipTexHeader *miptex = (tBSPMipTexHeader *)(this->m_data + this->m_miptexIndex[index]);
             width = miptex->width;
             height = miptex->height;
         }
@@ -173,9 +173,9 @@ GLuint BspFile::setupTextureToGl(int index)
 
     if (index >= 0 && index < this->m_miptexCount)
     {
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_2D, id);
-	this->createTextureFromMiptex(this->m_data + this->m_miptexIndex[index]);
+        glGenTextures(1, &id);
+        glBindTexture(GL_TEXTURE_2D, id);
+        this->createTextureFromMiptex(this->m_data + this->m_miptexIndex[index]);
     }
     return id;
 }
@@ -184,7 +184,7 @@ void BspFile::cleanupTextureFromGl(GLuint id)
 {
     if (this->m_file != 0)
     {
-	glDeleteTextures(1, &id);
+        glDeleteTextures(1, &id);
     }
 }
 
@@ -205,8 +205,6 @@ void BspFile::cleanupTextures()
 {
     if (this->m_file != 0)
     {
-	glDeleteTextures(this->m_miptexCount, this->m_textureIndex);
+        glDeleteTextures(this->m_miptexCount, this->m_textureIndex);
     }
 }
-
-

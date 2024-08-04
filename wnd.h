@@ -1,4 +1,4 @@
-/* 
+/*
  * File:   wnd.h
  * Author: Administrator
  *
@@ -6,7 +6,7 @@
  */
 
 #ifndef _WND_IMP_H
-#define	_WND_IMP_H
+#define _WND_IMP_H
 
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
@@ -16,37 +16,35 @@ namespace ui
     class wnd
     {
     public:
-	wnd(LPTSTR windowClass, DWORD id = 0);
-	virtual ~wnd();
+        wnd(LPTSTR windowClass, DWORD id = 0);
+        virtual ~wnd();
 
-	void move(int x, int y);
-	void resize(int width, int height);
+        void move(int x, int y);
+        void resize(int width, int height);
 
-	DWORD getStyle() const;
-	void setStyle(DWORD style);
+        DWORD getStyle() const;
+        void setStyle(DWORD style);
 
-	DWORD getExStyle() const;
-	void setExStyle(DWORD exStyle);
+        DWORD getExStyle() const;
+        void setExStyle(DWORD exStyle);
 
-	DWORD getID() const;
-	void setID(DWORD id);
+        DWORD getID() const;
+        void setID(DWORD id);
 
-	LPTSTR getText() const;
-	void setText(LPTSTR text);
+        LPTSTR getText() const;
+        void setText(LPTSTR text);
 
-	HWND operator * ();
-	HWND getHandle() const;
+        HWND operator*();
+        HWND getHandle() const;
 
     protected:
-	HWND m_hWnd;
-	HWND m_hParent;
-	DWORD m_id;
-	DWORD m_style, m_exStyle;
-	int m_x, m_y, m_width, m_height;
-	LPTSTR m_strWindowClass, m_strWindowTitle;
-
+        HWND m_hWnd = nullptr;
+        HWND m_hParent = nullptr;
+        DWORD m_id = 0;
+        DWORD m_style = 0, m_exStyle = 0;
+        int m_x = 0, m_y = 0, m_width = 1, m_height = 1;
+        LPTSTR m_strWindowClass = nullptr, m_strWindowTitle = nullptr;
     };
-}
+} // namespace ui
 
-#endif	/* _WND_IMP_H */
-
+#endif /* _WND_IMP_H */
