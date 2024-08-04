@@ -8,6 +8,7 @@ include(cmake/Dependencies.cmake)
 find_package(OpenGL REQUIRED)
 
 add_executable(HLViewer
+    README.md
     Common/common.cpp
     Common/common.h
     Common/string.cpp
