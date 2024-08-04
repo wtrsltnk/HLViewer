@@ -1,22 +1,21 @@
-/* 
+/*
  * File:   containerview.cpp
  * Author: Wouter
- * 
+ *
  * Created on January 28, 2009, 4:11 PM
  */
 
 #include "containerview.h"
-#include <GL/gl.h>
-#include <GL/glu.h>
-#include <iostream>
 #include "texturedialog.h"
+#include <glad/glad.h>
+#include <iostream>
 
 using namespace std;
 
 ContainerView::ContainerView()
-        : GLControl("containerview"), m_textureContainer(0), m_selectedTexture(-1)
+    : GLControl("containerview")
 {
-    this->m_style |=  WS_VSCROLL;
+    this->m_style |= WS_VSCROLL;
 }
 
 ContainerView::~ContainerView()
@@ -33,15 +32,15 @@ LRESULT ContainerView::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
             m_scrollInformation.nPos = 0;
             m_scrollInformation.nMin = 0;
             m_scrollInformation.nMax = 1;
-            SetScrollInfo (this->m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
-            GetScrollInfo (this->m_hWnd, SB_VERT, &m_scrollInformation);
+            SetScrollInfo(this->m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
+            GetScrollInfo(this->m_hWnd, SB_VERT, &m_scrollInformation);
 
             EnableScrollBar(this->m_hWnd, SB_VERT, ESB_DISABLE_BOTH);
             break;
         }
         case WM_PAINT:
         {
-	    this->useAsCurrent();
+            this->useAsCurrent();
 
             glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -58,61 +57,60 @@ LRESULT ContainerView::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
                 glScalef(1.0f, -1.0f, 1.0f);
                 drawOverview();
             }
-	    else
-	    {
-		cout << "No texture container to draw" << endl;
-	    }
+            else
+            {
+                cout << "No texture container to draw" << endl;
+            }
 
             SwapBuffers(this->m_hDC);
-	    ValidateRect(this->m_hWnd, NULL);
+            ValidateRect(this->m_hWnd, NULL);
             break;
         }
         case WM_VSCROLL:
         {
-            GetScrollInfo (this->m_hWnd, SB_VERT, &m_scrollInformation);
-            switch (LOWORD (wParam))
-            {         // user clicked the HOME keyboard key
-             case SB_TOP:
-                  m_scrollInformation.nPos = m_scrollInformation.nMin;
-                  break;
+            GetScrollInfo(this->m_hWnd, SB_VERT, &m_scrollInformation);
+            switch (LOWORD(wParam))
+            { // user clicked the HOME keyboard key
+                case SB_TOP:
+                    m_scrollInformation.nPos = m_scrollInformation.nMin;
+                    break;
 
-             // user clicked the END keyboard key
-             case SB_BOTTOM:
-                  m_scrollInformation.nPos = m_scrollInformation.nMax;
-                  break;
+                // user clicked the END keyboard key
+                case SB_BOTTOM:
+                    m_scrollInformation.nPos = m_scrollInformation.nMax;
+                    break;
 
-             // user clicked the top arrow
-             case SB_LINEUP:
-                  m_scrollInformation.nPos -= 1;
-                  break;
+                // user clicked the top arrow
+                case SB_LINEUP:
+                    m_scrollInformation.nPos -= 1;
+                    break;
 
-             // user clicked the bottom arrow
-             case SB_LINEDOWN:
-                  m_scrollInformation.nPos += 1;
-                  break;
+                // user clicked the bottom arrow
+                case SB_LINEDOWN:
+                    m_scrollInformation.nPos += 1;
+                    break;
 
-             // user clicked the scroll bar shaft above the scroll box
-             case SB_PAGEUP:
-                  m_scrollInformation.nPos -= m_scrollInformation.nPage;
-                  break;
+                // user clicked the scroll bar shaft above the scroll box
+                case SB_PAGEUP:
+                    m_scrollInformation.nPos -= m_scrollInformation.nPage;
+                    break;
 
-             // user clicked the scroll bar shaft below the scroll box
-             case SB_PAGEDOWN:
-                  m_scrollInformation.nPos += m_scrollInformation.nPage;
-                  break;
+                // user clicked the scroll bar shaft below the scroll box
+                case SB_PAGEDOWN:
+                    m_scrollInformation.nPos += m_scrollInformation.nPage;
+                    break;
 
-             // user dragged the scroll box
-             case SB_THUMBTRACK:
-                  m_scrollInformation.nPos = m_scrollInformation.nTrackPos;
-                  break;
+                // user dragged the scroll box
+                case SB_THUMBTRACK:
+                    m_scrollInformation.nPos = m_scrollInformation.nTrackPos;
+                    break;
 
-             default:
-                  break;
-
+                default:
+                    break;
             }
             m_scrollInformation.fMask = SIF_POS;
-            SetScrollInfo (this->m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
-            GetScrollInfo (this->m_hWnd, SB_VERT, &m_scrollInformation);
+            SetScrollInfo(this->m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
+            GetScrollInfo(this->m_hWnd, SB_VERT, &m_scrollInformation);
             EnableScrollBar(this->m_hWnd, SB_VERT, ESB_ENABLE_BOTH);
             if (m_scrollInformation.nPos <= 0)
             {
@@ -139,8 +137,8 @@ LRESULT ContainerView::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
                 m_scrollInformation.nPos += 1;
                 if (m_scrollInformation.nPos > m_scrollInformation.nMax) m_scrollInformation.nPos = m_scrollInformation.nMax;
             }
-            SetScrollInfo (this->m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
-            GetScrollInfo (this->m_hWnd, SB_VERT, &m_scrollInformation);
+            SetScrollInfo(this->m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
+            GetScrollInfo(this->m_hWnd, SB_VERT, &m_scrollInformation);
             EnableScrollBar(this->m_hWnd, SB_VERT, ESB_ENABLE_BOTH);
             if (m_scrollInformation.nPos <= 0)
             {
@@ -159,7 +157,7 @@ LRESULT ContainerView::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
         {
             this->m_width = LOWORD(lParam);
             this->m_height = HIWORD(lParam);
-            
+
             updateScrollbar();
             break;
         }
@@ -189,13 +187,13 @@ LRESULT ContainerView::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
 
             dlg.setTextureContainer(this->m_textureContainer);
             dlg.setCurrentTexture(this->m_selectedTexture);
-            
+
             dlg.showModal(this->m_parent);
             break;
         }
         case WM_KEYDOWN:
         {
-            int texturesPerRow = (this->m_width-20) / (TEXTUREPANEL_SIZE + 10);
+            int texturesPerRow = (this->m_width - 20) / (TEXTUREPANEL_SIZE + 10);
             switch (wParam)
             {
                 case VK_UP:
@@ -226,7 +224,7 @@ LRESULT ContainerView::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
     return GLControl::objectProc(msg, wParam, lParam);
 }
 
-void ContainerView::setTextureContainer(TextureContainer* tc)
+void ContainerView::setTextureContainer(TextureContainer *tc)
 {
     this->m_textureContainer = tc;
     this->updateScrollbar();
@@ -245,7 +243,7 @@ void ContainerView::selectTexture(int index)
         this->m_selectedTexture = index;
 
         int texturesPerRow = (this->m_width - TEXTUREVIEW_SPACING) / (TEXTUREPANEL_SIZE + TEXTUREPANEL_BORDER + TEXTUREVIEW_SPACING);
-        int  row = (index) / texturesPerRow;
+        int row = (index) / texturesPerRow;
         int rowsPerPage = (this->m_height - TEXTUREVIEW_SPACING) / (TEXTUREPANEL_SIZE + TEXTUREPANEL_TEXTAREA + TEXTUREPANEL_BORDER + TEXTUREVIEW_SPACING);
         if (rowsPerPage < 1) rowsPerPage = 1;
 
@@ -257,7 +255,7 @@ void ContainerView::selectTexture(int index)
         if (m_scrollInformation.nPos > m_scrollInformation.nMax)
             m_scrollInformation.nPos = m_scrollInformation.nMax;
 
-        SetScrollInfo (m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
+        SetScrollInfo(m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
     }
 }
 
@@ -273,11 +271,11 @@ void ContainerView::updateScrollbar()
         if (rowsPerPage < 1) rowsPerPage = 1;
 
         int totalRows = count / texturesPerRow;
-        int pages = count / (rowsPerPage*texturesPerRow);
+        int pages = count / (rowsPerPage * texturesPerRow);
 
-        if(count % (rowsPerPage*texturesPerRow) > 0)
+        if (count % (rowsPerPage * texturesPerRow) > 0)
             pages += 1;
-        if(count % texturesPerRow > 0)
+        if (count % texturesPerRow > 0)
             totalRows += 1;
 
         if (pages <= 1)
@@ -288,8 +286,8 @@ void ContainerView::updateScrollbar()
             if (m_scrollInformation.nPos > m_scrollInformation.nMax)
                 m_scrollInformation.nPos = m_scrollInformation.nMax;
 
-            SetScrollInfo (m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
-            GetScrollInfo (m_hWnd, SB_VERT, &m_scrollInformation);
+            SetScrollInfo(m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
+            GetScrollInfo(m_hWnd, SB_VERT, &m_scrollInformation);
             EnableScrollBar(this->m_hWnd, SB_VERT, ESB_DISABLE_BOTH);
         }
         else
@@ -300,8 +298,8 @@ void ContainerView::updateScrollbar()
             if (m_scrollInformation.nPos > m_scrollInformation.nMax)
                 m_scrollInformation.nPos = m_scrollInformation.nMax;
 
-            SetScrollInfo (m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
-            GetScrollInfo (m_hWnd, SB_VERT, &m_scrollInformation);
+            SetScrollInfo(m_hWnd, SB_VERT, &m_scrollInformation, TRUE);
+            GetScrollInfo(m_hWnd, SB_VERT, &m_scrollInformation);
             EnableScrollBar(this->m_hWnd, SB_VERT, ESB_ENABLE_BOTH);
         }
     }
@@ -344,20 +342,24 @@ void ContainerView::drawTexture(float x, float y, int w, int h, GLuint textureID
     drawRoundedRectangle(GL_LINE_LOOP, x, y, x + panel_width, y + panel_height);
 
     glColor3f(0.0f, 0.0f, 0.0f);
-    
+
     glColor3f(1.0f, 1.0f, 1.0f);
     glRasterPos2f(tx, ty - TEXTUREPANEL_TEXTAREA);
     glListBase(this->m_font);
-    glCallLists(name.Length(), GL_BYTE, (const char*)name);
+    glCallLists(name.Length(), GL_BYTE, (const char *)name);
 
     glColor3f(1.0f, 1.0f, 1.0f);
     glEnable(GL_TEXTURE_2D);
     glBindTexture(GL_TEXTURE_2D, textureID);
     glBegin(GL_QUADS);
-        glTexCoord2f(0.0f, 0.0f); glVertex2f(tx, th);
-        glTexCoord2f(1.0f, 0.0f); glVertex2f(tw, th);
-        glTexCoord2f(1.0f, 1.0f); glVertex2f(tw, ty);
-        glTexCoord2f(0.0f, 1.0f); glVertex2f(tx, ty);
+    glTexCoord2f(0.0f, 0.0f);
+    glVertex2f(tx, th);
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex2f(tw, th);
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex2f(tw, ty);
+    glTexCoord2f(0.0f, 1.0f);
+    glVertex2f(tx, ty);
     glEnd();
 }
 
@@ -395,7 +397,7 @@ void ContainerView::pickOverview(int mouse_x, int mouse_y)
     glGetIntegerv(GL_VIEWPORT, viewport);
     glSelectBuffer(512, buffer);
 
-    (void) glRenderMode(GL_SELECT);
+    (void)glRenderMode(GL_SELECT);
 
     glInitNames();
     glPushName(0);
@@ -403,7 +405,7 @@ void ContainerView::pickOverview(int mouse_x, int mouse_y)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
-    gluPickMatrix((GLdouble) mouse_x, (GLdouble) (viewport[3]-mouse_y), 1.0f, 1.0f, viewport);
+    // gluPickMatrix((GLdouble) mouse_x, (GLdouble) (viewport[3]-mouse_y), 1.0f, 1.0f, viewport);
 
     glOrtho(0, this->m_width, 0, -this->m_height, -300.0f, 300.0f);
 
@@ -423,10 +425,10 @@ void ContainerView::pickOverview(int mouse_x, int mouse_y)
 
         for (int loop = 1; loop < hits; loop++)
         {
-            if (buffer[loop*4+1] < GLuint(depth))
+            if (buffer[loop * 4 + 1] < GLuint(depth))
             {
-                this->m_selectedTexture = buffer[loop*4+3];
-                depth = buffer[loop*4+1];
+                this->m_selectedTexture = buffer[loop * 4 + 3];
+                depth = buffer[loop * 4 + 1];
             }
         }
     }

@@ -10,7 +10,7 @@
 
 #include "Common/common.h"
 #include "containerfile.h"
-#include <GL/gl.h>
+#include <glad/glad.h>
 
 class TextureContainer : public Container
 {

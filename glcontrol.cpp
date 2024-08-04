@@ -7,8 +7,7 @@
 
 #include "glcontrol.h"
 #include "window.h"
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <glad/glad.h>
 #include <stdio.h>
 #include <math.h>
 
@@ -91,6 +90,8 @@ LRESULT GLControl::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
                     this->destroyGLControl();
                     break;
                 }
+
+                gladLoadGL();
                 
                 this->createGLFont();
 

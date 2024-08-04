@@ -6,7 +6,7 @@
  */
 
 #include "textureview.h"
-#include <GL/gl.h>
+#include <glad/glad.h>
 #include <iostream>
 
 using namespace std;
@@ -75,7 +75,7 @@ LRESULT TextureView::objectProc(UINT msg, WPARAM wParam, LPARAM lParam)
 	    break;
 	}
     }
-    ui::GLControl::objectProc(msg, wParam, lParam);
+    return ui::GLControl::objectProc(msg, wParam, lParam);
 }
 
 void TextureView::drawTexture()
@@ -89,9 +89,9 @@ void TextureView::drawTexture()
 
     glColor3f(1.0f, 1.0f, 1.0f);
     glBegin(GL_QUADS);
-    glVertex2f(-w, -h); glTexCoord2f(0.0f, 0.0f);
-    glVertex2f(-w,  h); glTexCoord2f(1.0f, 0.0f);
-    glVertex2f( w,  h); glTexCoord2f(1.0f, 1.0f);
-    glVertex2f( w, -h); glTexCoord2f(0.0f, 1.0f);
+    glVertex2f((float)-w, (float)-h); glTexCoord2f(0.0f, 0.0f);
+    glVertex2f((float)-w, (float) h); glTexCoord2f(1.0f, 0.0f);
+    glVertex2f((float) w, (float) h); glTexCoord2f(1.0f, 1.0f);
+    glVertex2f((float) w, (float)-h); glTexCoord2f(0.0f, 1.0f);
     glEnd();
 }
